@@ -68,6 +68,10 @@ Result part1(vector<int> starting_positions) {
     }
 }
 
+int part2(vector<int> starting_positions) {
+    return 0;
+}
+
 
 int main() {
     vector<int> starting_positions;
