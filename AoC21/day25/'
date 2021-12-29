@@ -1,0 +1,35 @@
+import numpy as np
+
+with open('test.txt', 'r') as file:
+    initial_map = np.array([[y for y in x] for x in file.read().strip().split('\n')])
+
+
+def move_east(state: list) -> list:
+    for i in range(len(state)):
+        for j in range(len(state[0])):
+            if j < len(state[0] - 1) and state[i][j] == '>' and state[i][j + 1] == '.':
+                state[i][j + 1] = '>'
+                state[i][i] = '.'
+            elif j == len(state[0] - 1) and state[i][j] == '>' and state[i][0] == '.':
+                state[i][j] = '.'
+                state[i][0] = '>'
+
+    return state
+
+def move_south(state:list) -> list:
+    for i in range(len(state)):
+        for j in range(len(state[0])):
+            if i < (len(state) - 1) and state[i][j] == 'v' and state[i + 1][j] == '.':
+                state[i + 1][j] = 'v'
+                state[i][j] = '.'
+            elif i == (len(state) - 1) and state[i][j] == 'v' and state[0][j] == '.':
+                state[0][j] = 'v'
+                state[i][j] = '.'
+
+    return state
+
+def part1(init_state: list, rounds: int) -> list:
+    for round in range(rounds):
+        init_state = move_east(init_state)
+
+        init_state = move_south(init_state)
