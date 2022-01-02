@@ -1,14 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "strsplit.h"
+#include <fstream>
+#include "Strsplit.h"
 
 using namespace std;
 
 vector<string> read_instructions() {
     string line;
     vector<string> instructions;
-    ifstream myfile("test.txt");
+    ifstream myfile("../test.txt");
 
     if (myfile) {
         while (getline(myfile, line)) {
