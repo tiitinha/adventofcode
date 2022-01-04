@@ -1,6 +1,6 @@
 CC=g++
 
-ifeq ($(DEBUG),yes)
+ifeq ($(DEBUG), yes)
 	CXXFLAGS=-Wall -g
 	LDFLAGS=-Wall -g
 else
@@ -8,34 +8,34 @@ else
 	LDFLAGS=-Wall
 endif
 
+AR=ar
+ARFLAGS=rcs
+
 INCPATH=inc
 SRCPATH=src
 OBJPATH=obj
 LIBPATH=lib
 BINPATH=bin
 
-INC=
-SRC=$(SRCPATH)/day15.cpp
-OBJ=$(OBJPATH)/day15.o
-OUT=$(BINPATH)/day15
+INC=$(INCPATH)/Strsplit.h
+SRC=$(SRCPATH)/Strsplit.cpp
+OBJ=$(OBJPATH)/Strsplit.o
+OUT=$(LIBPATH)/libStrsplit.a
 
-INCLUDES=-I ./strsplit/$(INCPATH)
-LIBRARIES=-L ./strsplit/$(LIBPATH)
-LIB=-lStrsplit
-
+INCLUDES=-I ./$(INCPATH)
 
 default: $(OUT)
 
 $(OUT): $(OBJ)
-	$(CC) $(LDFLAGS) $(LIBRARIES) -static -o $@ $^ $(LIB)
+	$(AR) $(ARFLAGS) $@ $(OBJ)
 
-$(OBJPATH)/%.o: $(SRCPATH)/%.cpp
+$(OBJPATH)/%.o: $(SRCPATH)/%.cpp $(INC)
 	$(CC) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 .PHONY: clean cleanall
 
 clean:
-	rm -f $(OBJPATH)/*.o
+	rm -f $OBJPATH/*.o
 
 cleanall: clean
 	rm -f $(OUT)

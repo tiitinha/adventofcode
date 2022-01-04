@@ -21,15 +21,27 @@ vector<string> read_instructions() {
 }
 
 int run_instructions(vector<string> instructions, string input) {
+    int input_val;
+
+    char current;
+
     for (string line : instructions) {
         vector<string> instruction;
         instruction = split(line, " ");
 
-        for (string val : instruction) {
-            cout << val << " ";
+        if (instruction[0] == "inp") {
+            input_val = get_input();
+            current = instruction[1];
+
+
         }
-        cout << endl;
+
+        for (string val : instruction) {
+            //cout << val << ", ";
+        }
     }
+
+    cout << x << y << z << w
 
     return 0;
 }

@@ -15,9 +15,9 @@ LIBPATH=lib
 BINPATH=bin
 
 INC=
-SRC=$(SRCPATH)/day15.cpp
-OBJ=$(OBJPATH)/day15.o
-OUT=$(BINPATH)/day15
+SRC=$(SRCPATH)/day12.cpp
+OBJ=$(OBJPATH)/day12.o
+OUT=$(BINPATH)/day12
 
 INCLUDES=-I ./strsplit/$(INCPATH)
 LIBRARIES=-L ./strsplit/$(LIBPATH)
