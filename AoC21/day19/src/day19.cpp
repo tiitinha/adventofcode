@@ -12,7 +12,6 @@ vector<vector<string>> read_input() {
     ifstream myfile("../test.txt");
     vector<vector<string>> coords;
     vector<string> coordline;
-    Node new_node;
 
     if (myfile) {
         while (getline(myfile, line)) {

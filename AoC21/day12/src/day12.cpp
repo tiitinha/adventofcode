@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <queue>
+#include <cctype>
 
 using namespace std;
 
@@ -46,10 +47,15 @@ map<string, vector<string>> read_input() {
     return graph;
 }
 
+bool is_visited(string node, map<string, int> visited) {
+    return islower(node[0]) && visited[node] >= 1;
+}
+
 int bfs(map<string, vector<string>> graph) {
     queue<string> q;
     string next;
     vector<string> edges;
+    map<string, int> visited;
     int count = 0;
 
     q.push("start");
@@ -60,11 +66,15 @@ int bfs(map<string, vector<string>> graph) {
 
         edges = graph[next];
 
+        visited[next]++;
+
         for (string neighbor : edges) {
-            q.push(neighbor);
+            if (!is_visited(neighbor, visited)) {
+                q.push(neighbor);
+            }
             if (neighbor == "end") {
                 count++;
-                return count;
+                break;
             }
         }
     }
