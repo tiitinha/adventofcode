@@ -12,6 +12,8 @@ int main() {
     string firstPart;
     string secondPart;
     int lineLength;
+    set<char> uniqueCharsFirst;
+    set<char> uniqueCharsSecond;
 
     ifstream file("./input.txt");
 
@@ -21,6 +23,11 @@ int main() {
 
             firstPart = line.substr(0, (int) lineLength / 2);
             secondPart = line.substr((int) lineLength / 2, lineLength - 1);
+
+            uniqueCharsFirst = set(firstPart.begin(), firstPart.end());
+            uniqueCharsSecond = set(secondPart.begin(), secondPart.end());
+
+
 
             cout << firstPart << ", " << secondPart << endl;
         }
