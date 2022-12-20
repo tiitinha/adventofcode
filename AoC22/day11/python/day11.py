@@ -1,5 +1,6 @@
 import re
 from math import lcm, prod
+from copy import deepcopy
 
 def operate(old_val: int, operation: str) -> int:
 
@@ -25,7 +26,7 @@ def run_rounds(n: int, monkeys: dict, div: bool = True) -> dict:
     for i in range(n):
 
         for monkey in monkeys:
-            while len(monkey['starting_items']) > 0:
+            while monkey['starting_items']:
                 old_val = monkey['starting_items'].pop()
                 new_val = operate(old_val, monkey['operation'])
 
@@ -39,7 +40,7 @@ def run_rounds(n: int, monkeys: dict, div: bool = True) -> dict:
 
     return monkeys
 
-with open('test.txt', 'r') as f:
+with open('input.txt', 'r') as f:
     lines = f.read().split('\n\n')
 
 monkeys = [{} for _ in range(len(lines))]
@@ -55,6 +56,8 @@ for i, monkey in enumerate(lines):
     monkeys[i][False] = int(re.search(r'(\d+)', monkey_lines[5]).group())
     monkeys[i]['inspections'] = 0
 
+monkeys2 = deepcopy(monkeys)
+
 pt_1_monkeys = run_rounds(20, monkeys)
 
 vals = list(map(lambda x: x['inspections'], pt_1_monkeys))
@@ -62,7 +65,7 @@ vals.sort(reverse = True)
 print(vals[0] * vals[1])
 
 
-pt_2_monkeys = run_rounds(10000, monkeys, False)
+pt_2_monkeys = run_rounds(10000, monkeys2, False)
 
 vals2 = list(map(lambda x: x['inspections'], pt_2_monkeys))
 vals2.sort(reverse = True)

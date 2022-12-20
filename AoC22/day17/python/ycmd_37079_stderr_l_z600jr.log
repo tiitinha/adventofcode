@@ -1,0 +1,7 @@
+2022-12-17 11:44:57,864 - ERROR - libpython3.7m.so.1.0: cannot open shared object file: No such file or directory
+Traceback (most recent call last):
+  File "/home/tiitinha/vim/bundle/YouCompleteMe/third_party/ycmd/ycmd/utils.py", line 498, in ImportAndCheckCore
+    ycm_core = ImportCore()
+  File "/home/tiitinha/vim/bundle/YouCompleteMe/third_party/ycmd/ycmd/utils.py", line 489, in ImportCore
+    import ycm_core as ycm_core
+ImportError: libpython3.7m.so.1.0: cannot open shared object file: No such file or directory
