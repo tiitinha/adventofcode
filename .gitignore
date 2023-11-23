@@ -1,6 +1,6 @@
 *.exe
-*.sh
 *.o
 Makefile
 Makefile.in
 .aocrc
+utils

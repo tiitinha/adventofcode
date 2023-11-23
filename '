@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#dayNum=$(date +'%-d)
+#yearNum=$(date +%-Y)-2000
+yearNum=19
+dayNum=1
+
+return_daily_path()
+{
+	return "./utils/$1.$2" "./AoC$3/day$4/day$4.$2"
+}
+
+echo "Creating setup for the day $dayNum"
+
+if [ ! -d "AoC$yearNum/day$dayNum" ]
+then
+	mkdir "AoC$yearNum/day$dayNum"
+else
+	echo "Directory $dayNum already exists in directory AoC$yearNum"
+	exit 0
+fi
+
+echo $return_daily_path $python_template $.py $yearNum $dayNum
+echo $return_daily_path $rust_template $.s $yearNum $dayNum
+cp -r ./utils/cpp_template ./AoC$yearNum/day$dayNum/cpp
+
+sed -i "s/day_template/day$dayNum/" ./AoC$yearNum/day$dayNum/cpp/Makefile
+
+#curl -o ./AoC$yearNum/day$dayNum/input.txt -b session$(cat .aocrc) -H "User-Agent: kobo-kobe@hotmail.com" https://adventofcode.com/$(date +%-Y)/day/$dayNum/input
+
+echo "Setup for year $yearNum day $dayNum is done!!!"
