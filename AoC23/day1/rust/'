@@ -1,0 +1,51 @@
+use std::fs;
+use std::convert::TryInto;
+use std::collections::HashMap;
+
+//const num_strings: HashMap::from([("one", 1), ("two", 2), ("three", 3), ("four", 4), ("five", 5), ("six", 6), ("seven", 7), ("eight", 8), ("nine", 9)]);
+let num_strings: HashMap<&str, i32> = HashMap::from([
+    ("one", 1),
+    ("two", 2),
+    ("three", 3),
+    ("four", 4),
+    ("five", 5),
+    ("six", 6),
+    ("seven", 7),
+    ("eight", 8),
+    ("nine", 9),
+]);
+
+fn main() {
+    let instructions = fs::read_to_string("../input.txt").expect("Error");
+
+    let mut num_sum = 0;
+
+    for line in instructions.split("\n") {
+        if line.len() > 0 {
+            num_sum += get_first_and_last_digit_combined(line.to_string());
+        }
+    }
+
+    println!("{}", num_sum);
+}
+
+fn get_first_and_last_digit_combined(line: String) -> i32 {
+    let mut first_digit = -1;
+    let mut last_digit = -1;
+    for c in line.chars() {
+        if c.is_digit(10) {
+            let number: i32 = c.to_digit(10).unwrap_or(0).try_into().unwrap();
+            if first_digit == -1 {
+                first_digit = number;
+            }
+            last_digit = number;
+        }
+    }
+
+    let final_number = format!("{}{}", first_digit, last_digit).parse::<i32>().unwrap();
+    return final_number;
+}
+
+fn replace_num_strings_in_line(line: &str) -> &str {
+    return "test";
+}
