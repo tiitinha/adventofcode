@@ -1,11 +1,8 @@
 #!/bin/bash
 
-#dayNum=$(date +%-d)
-#yearNum=$(($(date +%-Y) - 2000))
-
-dayNum=1
-yearNum=19
-year=2019
+dayNum=$(date +%-d)
+yearNum=$(($(date +%-Y) - 2000))
+year=$(date -%-Y)
 
 return_daily_path()
 {
@@ -24,11 +21,13 @@ else
 fi
 
 return_daily_path $"python_template" $"py" $yearNum $dayNum $"python"
-return_daily_path $"rust_template" $"rs" $yearNum $dayNum $"rust"
 cp -r ./utils/cpp_template ./AoC$yearNum/day$dayNum/cpp
 
 sed -i "s/day_template/day$dayNum/" ./AoC$yearNum/day$dayNum/cpp/Makefile
 
 curl -o ./AoC$yearNum/day$dayNum/input.txt -b session=$(cat .aocrc) -H "User-Agent: htiitinen94@gmail.com" https://adventofcode.com/$year/day/$dayNum/input
+
+cd ./AoC$yearNum/day$dayNum
+cargo new rust
 
 echo "Setup for year $yearNum day $dayNum is done!!!"

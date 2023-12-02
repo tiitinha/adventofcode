@@ -2,50 +2,74 @@ use std::fs;
 use std::convert::TryInto;
 use std::collections::HashMap;
 
-//const num_strings: HashMap::from([("one", 1), ("two", 2), ("three", 3), ("four", 4), ("five", 5), ("six", 6), ("seven", 7), ("eight", 8), ("nine", 9)]);
-let num_strings: HashMap<&str, i32> = HashMap::from([
-    ("one", 1),
-    ("two", 2),
-    ("three", 3),
-    ("four", 4),
-    ("five", 5),
-    ("six", 6),
-    ("seven", 7),
-    ("eight", 8),
-    ("nine", 9),
-]);
-
 fn main() {
-    let instructions = fs::read_to_string("../input.txt").expect("Error");
+    let instructions = fs::read_to_string("../test.txt").expect("Error");
 
-    let mut num_sum = 0;
+    let mut num_sum_pt1 = 0;
+    let mut num_sum_pt2 = 0;
+
+    let num_strings: HashMap<&str, u8> = HashMap::from([
+        ("one", 1),
+        ("two", 2),
+        ("three", 3),
+        ("four", 4),
+        ("five", 5),
+        ("six", 6),
+        ("seven", 7),
+        ("eight", 8),
+        ("nine", 9),
+    ]);
 
     for line in instructions.split("\n") {
         if line.len() > 0 {
-            num_sum += get_first_and_last_digit_combined(line.to_string());
+            // num_sum_pt1 += get_first_and_last_digit_combined(line.to_string());
+            num_sum_pt2 += get_first_and_last_digit_combined_pt2(line.to_string(), &num_strings);
         }
     }
 
-    println!("{}", num_sum);
+    println!("pt1: {}, pt2: {}", num_sum_pt1, num_sum_pt2);
 }
 
-fn get_first_and_last_digit_combined(line: String) -> i32 {
-    let mut first_digit = -1;
-    let mut last_digit = -1;
+fn get_first_and_last_digit_combined(line: String) -> u32 {
+    let mut first_digit = 0;
+    let mut last_digit = 0;
+
+    println!("{}", line);
+
     for c in line.chars() {
         if c.is_digit(10) {
-            let number: i32 = c.to_digit(10).unwrap_or(0).try_into().unwrap();
-            if first_digit == -1 {
+            let number: u32 = c.to_digit(10).unwrap_or(0).try_into().unwrap();
+            if first_digit == 0 {
                 first_digit = number;
             }
             last_digit = number;
         }
     }
 
-    let final_number = format!("{}{}", first_digit, last_digit).parse::<i32>().unwrap();
+    println!("{} {}", first_digit, last_digit);
+
+    let final_number = format!("{}{}", first_digit, last_digit).parse::<u32>().unwrap();
     return final_number;
 }
 
-fn replace_num_strings_in_line(line: &str) -> &str {
-    return "test";
+fn get_first_and_last_digit_combined_pt2(line: String, num_strings: &HashMap<&str, u8>) -> u32 {
+
+    let mut dig_idx = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    for (str_num, num) in num_strings.into_iter() {
+        let char_num = num.to_string();
+
+        let first_idx = line.find(&char_num);
+        let second_idx = line.find(&*str_num);
+
+        let value_usize = if first_idx <= second_idx { first_idx } else { second_idx };
+        let value_int: u32 = u32::from(value_usize);
+        let array_index = *num as usize;
+
+        dig_idx[array_index] = value_int;
+    }
+
+    println!("{}", line);
+    return 1;
 }
+

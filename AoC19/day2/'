@@ -1,0 +1,29 @@
+use std::fs;
+
+fn main() {
+    let raw_input: String = fs::read_to_string("input.txt").expect("Something went wrong reading the file");
+    let mut int_code: Vec<u16> = raw_input.split(",").map(|x| x.parse::<u16>().unwrap()).collect();
+
+    let mut i = 0;
+
+    while i <= int_code.len() {
+        if i >= int_code.len() || int_code[i] == 99 {
+            break;
+        }
+
+        let result: u16 = if int_code[i] == 1 {
+            int_code[int_code[i + 1]] + int_code[int_code[i + 2]]
+        } else if int_code[i] == 2 {
+            int_code[int_code[i + 1]] * int_code[int_code[i + 2]]
+        } else {
+            break
+        };
+
+        let position: usize = int_code[i + 3].into();
+        int_code[position] = result;
+        println!("{}", result);
+
+        i += 4;
+    }
+    
+}
