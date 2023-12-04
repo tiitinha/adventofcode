@@ -2,7 +2,7 @@
 
 dayNum=$(date +%-d)
 yearNum=$(($(date +%-Y) - 2000))
-year=$(date -%-Y)
+yearFull=$(date +%-Y)
 
 return_daily_path()
 {
@@ -25,7 +25,7 @@ cp -r ./utils/cpp_template ./AoC$yearNum/day$dayNum/cpp
 
 sed -i "s/day_template/day$dayNum/" ./AoC$yearNum/day$dayNum/cpp/Makefile
 
-curl -o ./AoC$yearNum/day$dayNum/input.txt -b session=$(cat .aocrc) -H "User-Agent: htiitinen94@gmail.com" https://adventofcode.com/$year/day/$dayNum/input
+curl -o ./AoC$yearNum/day$dayNum/input.txt -b session=$(cat .aocrc) -H "User-Agent: htiitinen94@gmail.com" https://adventofcode.com/$yearFull/day/$dayNum/input
 
 cd ./AoC$yearNum/day$dayNum
 cargo new rust

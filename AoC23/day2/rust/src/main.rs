@@ -1,5 +1,7 @@
 use std::fs;
 
 fn main() {
-    let input_data = fs::read_to_string("../../input.txt");
-}
+    let input_data = fs::read_to_string("../../test.txt");
+
+
+}   
