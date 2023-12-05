@@ -6,8 +6,9 @@ with open('../input.txt') as f:
 
 
 res_sum = 0
+scratchcards = [1] * (len(cards) + 1)
 
-for card in cards:
+for i, card in enumerate(cards):
     splitted = card.split(':')
     winning, elfs = splitted[1].split('|')
     winning = re.findall('([0-9]+)', winning)
@@ -19,4 +20,9 @@ for card in cards:
 
     res_sum += points
 
+    for winning_num in range(len(elfs_winning)):
+        card_number = winning_num + i + 1 + 1
+        scratchcards[card_number] += scratchcards[i + 1]
+
 print(res_sum)
+print(sum(scratchcards[1:]))

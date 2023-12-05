@@ -85,6 +85,7 @@ for j in range(len(input_data)):
         gears.setdefault(f'{is_gear}', []).append(current_part)
 
 pt1 = sum([int(x) for x in parts])
+print(parts)
 print(pt1)
 
 #for key, value in gears.items():
