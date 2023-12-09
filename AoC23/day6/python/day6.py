@@ -3,7 +3,7 @@ import cmath
 import numpy as np
 import math
 
-with open('../input.txt') as f:
+with open('../inpt.txt') as f:
     raw_input = f.readlines()
 
     time = [int(x) for x in re.findall('([0-9]+)', raw_input[0])]
