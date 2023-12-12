@@ -9,15 +9,8 @@ with open('../input.txt') as f:
 
 galaxies = [(y, x) for x in range(len(input_data[0])) for y in range(len(input_data)) if input_data[y][x] == '#']
 
-rows = [False for _ in range(len(input_data))]
-cols = [False for _ in range(len(input_data[0]))]
-
-for i, row in enumerate(input_data):
-    rows[i] = all([x == '.' for x in row])
-
-for j, col in enumerate(input_data.T):
-    cols[j] =  all([x == '.' for x in col])
-
+rows = [all([x == '.' for x in row]) for row in input_data]
+cols = [all([x == '.' for x in col]) for col in input_data.T]
 
 def shift_galaxies(galaxies, amt):
     new_galaxies = []
