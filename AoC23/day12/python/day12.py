@@ -1,4 +1,6 @@
 with open('../input.txt') as f:
-    input_data = [x.strip() for x in f.readlines()]
+    input_data = [x.strip().split(' ') for x in f.readlines()]
 
-print(input_data)
+
+for data, numbers in input_data:
+    print(data, numbers)

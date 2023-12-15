@@ -10,25 +10,7 @@ parts = []
 gears = defaultdict(list)
 
 def create_neighbors(y, x):
-    x_dir = []
-    if x == 0:
-        x_dir.extend([0 ,1])
-    elif x == len(input_data[0]) - 1:
-        x_dir.extend([-1, 0])
-    else:
-        x_dir.extend([-1, 0, 1])
-    
-
-    y_dir = []
-
-    if y == 0:
-        y_dir.extend([0 ,1])
-    elif y == len(input_data) - 1:
-        y_dir.extend([-1, 0])
-    else:
-        y_dir.extend([-1, 0, 1])
-
-    neighbors = [(y + y_diff, x + x_diff) for y_diff in y_dir for x_diff in x_dir]
+    neighbors = [(y + y_diff, x + x_diff) for y_diff in range(-1, 2) for x_diff in range(-1, 2) if (y + y_diff < len(input_data) and y + y_diff >= 0) and (x + x_diff < len(input_data[0]) and x + x_diff >= 0)]
 
     return neighbors
 
