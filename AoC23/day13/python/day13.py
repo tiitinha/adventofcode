@@ -10,7 +10,7 @@ def convert(data):
     return output
 
 with open('../test.txt') as f:
-    input_data = [np.array(([convert(z) for z in y] for y in [x.strip().split('\n')])) for x in f.read().split('\n\n')]
+    input_data = [np.array([[convert(z) for z in y] for y in [x.strip().split('\n')]]) for x in f.read().split('\n\n')]
 
 def check_horizontal_mirroring(pattern):
     return 0

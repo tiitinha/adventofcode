@@ -1,5 +1,6 @@
 import numpy as np
 from collections import defaultdict
+import math
 
 with open('../input.txt') as f:
     input_data = np.asarray([[y for y in x.strip()] for x in f.readlines()])
@@ -47,7 +48,7 @@ for j in range(len(input_data)):
             if is_valid_part and current_part != '':
                 parts.append(current_part)
             if is_gear and current_part != '':
-                gears.setdefault(f'{is_gear}', []).append(current_part)    
+                gears.setdefault(is_gear, []).append(int(current_part))    
             current_part = ''
             is_valid_part = False
             is_gear = False
@@ -58,20 +59,23 @@ for j in range(len(input_data)):
             is_gear = is_gear if is_gear else check_if_gear(j, i)
 
         current_part += input_data[j][i]
-
+    
     if is_valid_part:
         parts.append(current_part)
-        current_part = ''
 
-    if is_gear and current_part != '':
-        gears.setdefault(f'{is_gear}', []).append(current_part)
+    if is_gear != False and current_part != '':
+        #print(is_gear, current_part)
+        gears.setdefault(is_gear, []).append(int(current_part))
+
+
+    current_part = ''
 
 pt1 = sum([int(x) for x in parts])
-print(parts)
+#print(parts)
 print(pt1)
 
 #for key, value in gears.items():
 #    print(key, value)
 
 gear_lists = [x for x in gears.values() if len(x) == 2]
-print(sum([int(x[0]) * int(x[1]) for x in gear_lists]))
+print(sum([math.prod([int(y) for y in x]) for x in gear_lists]))

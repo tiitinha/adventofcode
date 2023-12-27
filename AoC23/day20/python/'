@@ -1,0 +1,18 @@
+from collections import defaultdict
+
+with open('../test.txt') as f:
+    instr = {(y[0][1:] if len(y[0]) < 10 else y[0]): {'out': y[1].split(', '), 'state': 0, 'type': y[0][0] if y[0][0] == '%' or y[0][0] == '&' else None} for y in [x.strip().split(' -> ') for x in f.readlines()]}
+
+inputs = {}
+outputs = defaultdict(list)
+
+for inst, vals in instr.items():
+   # print(vals)
+    outputs[inst] = vals['out']
+    
+    for val in vals['out']:
+        inputs[val].append(inst)
+
+instr['button'] = {'out': 'broadcaster', 'type': None, 'state': 0}
+
+print(instr)
