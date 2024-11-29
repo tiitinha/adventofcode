@@ -11,6 +11,18 @@ with open('../test.txt') as f:
         formatted_mapping = [z.split(' ') for y in [x.split('\n') for x in mapping[1:]] for z in y]
         maps.append(formatted_mapping)
 
+    seed_ranges = []
+
+    i = 0
+
+    while i < len(seeds) - 1:
+        seed_range = (seeds[i], seeds[i + 1])
+        seed_ranges.append(seed_range)
+
+        i += 1
+
+    print(seed_ranges)
+
 def get_mapped_value(value, rng):
     source_start = int(rng[1])
     dest_start = int(rng[0])
@@ -23,25 +35,26 @@ def get_mapped_value(value, rng):
 
     return None
 
+def part1(seeds):
+    seeds = [int(x) for x in seeds]
+    lowest = np.inf
 
+    for seed in seeds:
+        new_seed = seed
+        for map in maps:
+            for rng in map:
+                new_seed_val = get_mapped_value(new_seed, rng)
 
-
-seeds = [int(x) for x in seeds]
-lowest = np.inf
-
-for seed in seeds:
-    new_seed = seed
-    for map in maps:
-        for rng in map:
-            new_seed_val = get_mapped_value(new_seed, rng)
-
-            if new_seed_val:
-                break
-        if not new_seed_val:
-            new_seed_val = new_seed
+                if new_seed_val:
+                    break
+            if not new_seed_val:
+                new_seed_val = new_seed
         
-        new_seed = new_seed_val
+            new_seed = new_seed_val
 
-    lowest = new_seed if new_seed < lowest else lowest
+        lowest = new_seed if new_seed < lowest else lowest
 
-print(lowest)
+def part2()
+
+print(part1(seeds))
+

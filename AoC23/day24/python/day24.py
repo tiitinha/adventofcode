@@ -16,7 +16,7 @@ def solve_intercept(line, line_2):
     b_2 = line_2[1]
 
     if (a_1 - a_2 == 0):
-        return False
+        return None
     
     x_res = (b_2 - b_1) / (a_1 - a_2)
     y_res = (a_1 * x_res) + b_1
@@ -24,8 +24,9 @@ def solve_intercept(line, line_2):
     return (x_res, y_res)
 
 def in_future(hail_1, hail_2, ic):
-    hail_1_future = (np.array(hail_1[0][0][:1]) - np.array(ic)) * np.array(hail_1[0][1][:1])
-    hail_2_future = (np.array(hail_2[0][0][:1]) - np.array(ic)) * np.array(hail_2[0][1][:1])
+    hail_1_future = (np.array(hail_1[0][0][:2]) - np.array(ic)) * np.array(hail_1[0][1][:2])
+    hail_2_future = (np.array(hail_2[0][0][:2]) - np.array(ic)) * np.array(hail_2[0][1][:2])
+
     return all(hail_1_future <= 0) and all(hail_2_future <= 0)
 
 def in_test_zone(ic, test_zone):
