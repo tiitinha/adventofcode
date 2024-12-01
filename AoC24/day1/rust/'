@@ -1,0 +1,20 @@
+use std::fs;
+
+fn main() {
+    let contents = fs::read_to_string("../input.txt").expect("No fail");
+    let mut vec_1 = Vec::new();
+    let mut vec_2 = Vec::new();
+
+    for line in contents.split("\n") {
+        let values = line.split_whitespace().collect::<Vec<&str>>();
+        
+        if values.len() > 0 {
+            let first = values[0].parse::<i32>().unwrap();
+            let second = values[1].parse::<i32>().unwrap();
+
+            vec_1.push(first);
+            vec_2.push(second);
+        }
+    }
+}
+
