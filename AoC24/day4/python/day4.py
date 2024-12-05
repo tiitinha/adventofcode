@@ -6,6 +6,11 @@ next_letter = {
     'A': 'S'
 }
 
+mas_mapping = {
+    'M': 'S',
+    'S': 'M'
+}
+
 directions = [(-1, -1), (1, -1), (-1, 1), (1, 1), (-1, 0), (1, 0), (0, -1), (0, 1)]
 
 
@@ -20,6 +25,9 @@ def is_possible(x, y, dir):
     new_y = y + 3 * dir[1]
 
     return (0 <= new_x <= width) & (0 <= new_y <= width)
+
+def mas_possible(x, y):
+    return (0 <= x - 1 <= width) & (0 <= x + 1 <= width) & (0 <= y - 1 <= height) & (0 <= y + 1 <= height)
 
 def check_text(x, y, dir):
     new_x = x + dir[0]
@@ -45,24 +53,20 @@ def check_text(x, y, dir):
 
     return True
 
-def get_neighbors(x, y):
-    count = 0
-    value = input[y][x]
+def check_mas(x, y):
+    not_allowed = ['X', 'A']
+    upper_left = input[y - 1][x - 1]
+    lower_left = input[y + 1][x - 1]
+    upper_right = input[y - 1][x + 1]
+    lower_right = input[y + 1][x + 1]
 
-    if value == 'S':
-        return 1
+    if (upper_left in not_allowed) | (lower_left in not_allowed) | (upper_right in not_allowed) | (lower_right in not_allowed):
+        return False
 
-    x_vals = [x + i for i in range(-1, 2) if (x + i >= 0) & (x + i < len(input[0]))]
-    y_vals = [y + i for i in range(-1, 2) if (y + i >= 0) & (y + i < len(input))]
-
-    neighbors = [(i, j) for i in x_vals for j in y_vals if (input[j][i] == next_letter[value]) & (not(i == x & y == j))]
-
-    for neighbor in neighbors:
-        count += get_neighbors(neighbor[0], neighbor[1])
-
-    return count
+    return (mas_mapping[upper_left] == lower_right) & (mas_mapping[lower_left] == upper_right)
 
 count = 0
+count2 = 0
 
 for j in range(len(input)):
     for i in range(len(input[0])):
@@ -74,4 +78,13 @@ for j in range(len(input)):
                     if valid:
                         count += 1
 
+        if (input[j][i] == 'A') & mas_possible(j, i):
+            valid = check_mas(i, j)
+
+            if valid:
+                count2 += 1
+
+
+
 print(count)
+print(count2)
