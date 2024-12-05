@@ -13,7 +13,6 @@ mas_mapping = {
 
 directions = [(-1, -1), (1, -1), (-1, 1), (1, 1), (-1, 0), (1, 0), (0, -1), (0, 1)]
 
-
 with open('../input.txt') as f:
     input = np.array([list(x.strip()) for x in f.readlines()])
     width = len(input[0]) - 1
@@ -83,8 +82,6 @@ for j in range(len(input)):
 
             if valid:
                 count2 += 1
-
-
 
 print(count)
 print(count2)
