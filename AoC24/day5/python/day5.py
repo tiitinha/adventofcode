@@ -17,7 +17,7 @@ def update_follows_rules(update, rules):
 
     return True
 
-with open('../input.txt') as f:
+with open('../input2.txt') as f:
     rules, updates = f.read().split('\n\n')
 
 rules = [[int(y) for y in z] for z in [x.split('|') for x in rules.split('\n')]]
