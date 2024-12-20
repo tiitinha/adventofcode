@@ -42,11 +42,10 @@ while not len(heap) == 0:
         coords = neighbor[0]
         if dist <= dist_array[coords[0]][coords[1]] and visited[coords[0]][coords[1]] == 0:
             dist_array[coords[0]][coords[1]] = dist
+
             new_node = (dist, next(tiebreaker), coords, direction)
             heapq.heappush(heap, new_node)
             visited[coords[0]][coords[1]] = 1
 
 
 print(dist_array[end[0]][end[1]])
-
-#print(visited)

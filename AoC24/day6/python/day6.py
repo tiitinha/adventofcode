@@ -2,7 +2,7 @@ import numpy as np
 
 rot_right = np.array([[0, 1], [-1, 0]])
 
-with open('../test.txt') as f:
+with open('../input.txt') as f:
     map_input = np.array([[z for z in y] for y in [x.strip() for x in f.readlines()]])
 
 width = len(map_input[0]) - 1
@@ -12,10 +12,13 @@ guard_location = np.argwhere(map_input == '^')[0]
 obstacles = np.argwhere(map_input == '#')
 
 def check_obstacle(location, direction, visited):
-    next_loc = location + direction
+    next_dir = np.dot(rot_right, direction)
+    next_loc = (location[0], location[1])
 
-    if (next_loc[0], next_loc[1]) in (visited):
-        return True
+    while can_move_forward(next_loc, next_dir):
+        next_loc += next_dir
+        if (next_loc[0], next_loc[1], next_dir[0], next_dir[1]) in (visited):
+            return True
 
     return False
 
@@ -31,7 +34,7 @@ def can_move_forward(location, direction):
     return False
 
 def can_turn_right(location, direction):
-    new_direction = np.dot(rot_right, direction)
+    new_direction = np.dot(direction, rot_right)
     potential_next = location + new_direction
 
     x_legit = (0 <= potential_next[1] <= width)
@@ -49,27 +52,26 @@ def is_going_out(guard_location, direction):
 
 direction = np.array([-1, 0])
 visited = set()
+visited_dir = set()
 visited.add((guard_location[0], guard_location[1]))
+visited_dir.add((guard_location[0], guard_location[1], direction[0], direction[1]))
 visited_obstacles = set()
 count = 0
 
 while True:
+    if check_obstacle(guard_location, direction, visited_dir):
+        count += 1
     if is_going_out(guard_location, direction):
        break 
     elif can_move_forward(guard_location, direction):
         guard_location += direction
     elif can_turn_right(guard_location, direction):
-        visited_obstacle = guard_location + direction
         direction = np.dot(rot_right, direction)
         guard_location += direction
 
-        visited_obstacles.add((visited_obstacle[0], visited_obstacle[1]))
-
-    if check_obstacle(guard_location, direction, visited_obstacles):
-        print(guard_location, direction)
-        count += 1
 
     visited.add((guard_location[0], guard_location[1]))
+    visited_dir.add((guard_location[0], guard_location[1], direction[0], direction[1]))
 
 print(len(visited))
 print(count)
