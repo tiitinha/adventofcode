@@ -1,0 +1,50 @@
+import numpy as np
+
+def check_neighbors(row: int, col: int, paper_map):
+    count = 0
+    neighboring_cells = [(y + row, x + col) for x in range(-1, 2) for y in range(-1, 2) if (y + row >= 0 and y + row < rows) and (x + col >= 0 and x + col < cols) and not(x == 0 and y == 0)]
+    
+    for cell in neighboring_cells:
+        y, x = cell
+
+        if paper_map[y][x] == "@":
+            count += 1
+    
+    return count
+    
+
+with open("../input.txt") as f:
+    paper_map = np.array([[y for y in x.strip()] for x in f.readlines()])
+
+papers = np.array([(y, x) for x in range(len(paper_map[0])) for y in range(len(paper_map)) if paper_map[y][x] == "@"])
+
+print(papers)
+
+rows = len(paper_map)
+cols = len(paper_map[0])
+total_count = 0
+
+removable = []
+rounds = True
+
+while rounds:
+    for j in range(rows):
+        for i in range(cols):
+            if (paper_map[j][i] != "@"):
+                continue
+
+            neighbor_count = check_neighbors(j, i, paper_map)
+        
+            if (neighbor_count < 4):
+                total_count += 1
+                removable.append([j, i])
+                #print(j, i, neighbor_count)
+                
+    if len(removable) == 0:
+        rounds = False
+                
+    while len(removable) > 0:
+        point = removable.pop()
+        paper_map[point[0]][point[1]] = '.'
+
+print(total_count)

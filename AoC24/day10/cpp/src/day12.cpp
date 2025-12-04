@@ -1,4 +1,3 @@
-#include <array>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,27 +5,32 @@
 typedef struct {
   int x;
   int y;
+  int value;
 } Point;
 
-Point *get_start_points(int **arrayOfVals, size_t rows, size_t cols) {
-  int pointsSize = 0;
-  Point *points = (Point *)malloc(sizeof(Point));
+Point *get_start_points(int **arrayOfVals, size_t rows, size_t cols,
+                        int *count) {
+  int pointsSize = 1;
+  int pointsCount = 0;
+  Point *points = (Point *)malloc(pointsSize * sizeof(Point));
 
   for (size_t i = 0; i < rows; i++) {
     for (size_t j = 0; j < cols; j++) {
-      printf("%i", arrayOfVals[i][j]);
-
       if (arrayOfVals[i][j] == 0) {
         pointsSize++;
         points = (Point *)realloc(points, pointsSize * sizeof(Point));
 
-        points[pointsSize].x = i;
-        points[pointsSize].y = j;
+        points[pointsCount].x = i;
+        points[pointsCount].y = j;
+        points[pointsCount].value = 0;
+
+        pointsCount++;
       }
     }
     printf("\n");
   }
 
+  *count = pointsCount;
   return points;
 }
 
@@ -39,6 +43,8 @@ int main() {
   int **storedArray;
   int currentRow = 0;
   int currentColumn = 0;
+  Point *points;
+  int count = 0;
 
   storedArray = (int **)malloc(lines * sizeof(int *));
 
@@ -100,13 +106,18 @@ int main() {
 
   fclose(fptr);
 
-  get_start_points(storedArray, lines, columns);
+  points = get_start_points(storedArray, lines, columns, &count);
+
+  for (int i = 0; i < count; i++) {
+    printf("point %d: (%d, %d)\n", points[i].value, points[i].x, points[i].y);
+  }
 
   for (int i = 0; i < lines; i++) {
     free(storedArray[i]);
   }
 
   free(storedArray);
+  free(points);
 
   return 0;
 }

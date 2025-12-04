@@ -3,5 +3,8 @@
 Makefile
 Makefile.in
 .aocrc
-utils
-target/*
+utils/
+target/
+input.txt
+**/*.rs.bk
+*~
